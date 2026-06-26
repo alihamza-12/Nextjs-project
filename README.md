@@ -7,3 +7,5 @@
   npx prisma studio
 npm install @libsql/client @prisma/adapter-libsql
 npx prisma db push
+
+npx tsx prisma/seed.ts (For add the products in DB first time)
