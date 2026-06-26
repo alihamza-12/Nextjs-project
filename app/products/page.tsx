@@ -6,6 +6,9 @@ export default async function Page() {
 
   return (
     <main className="p-8">
+      <Link href="/products/create" className="text-blue-500 hover:underline mb-6 inline-block">
+        Create Product
+      </Link>
       <h1 className="text-xl font-bold mb-4">Store Inventory</h1>
       <div className="space-y-2">
         {products.map((product) => (

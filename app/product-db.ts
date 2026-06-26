@@ -29,3 +29,23 @@ export async function getProductFromId(id:number) {
 }
 
 // getProductFromId(2)
+
+
+// Create a new product in the DB
+export async function createProduct(title: string, price: number, description?: string) {
+  try {
+    const newProduct = await prisma.product.create({
+      data: {
+        title,
+        price,
+        description,
+      },
+    });
+
+    console.log("Successfully created product ✅", newProduct);
+    return newProduct;
+  } catch (error) {
+    console.error("Error inserting product into database:", error);
+    throw error;
+  }
+}
