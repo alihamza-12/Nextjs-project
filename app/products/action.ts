@@ -1,7 +1,8 @@
 "use server";
 
+import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { createProduct, updateProduct } from "../product-db"; 
+import { createProduct, updateProduct ,deleteProduct } from "../product-db"; 
 
 // Define the shape of our form state response (Shared by both functions)
 export type FormState = {
@@ -85,4 +86,29 @@ export async function handleUpdateProductForm(
   } catch (error) {
     return { success: false, message: "Failed to update database record." };
   }
+}
+
+// Add this action to the bottom of app/products/actions.ts
+
+export async function handleDeleteProduct(formData: FormData) {
+  const idString = formData.get("id") as string;
+  const id = parseInt(idString, 10);
+
+  if (isNaN(id)) {
+    throw new Error("Invalid product ID for deletion.");
+  }
+
+  try {
+    // Delete the row from SQLite
+    await deleteProduct(id);
+
+    // Wipe cache for the products list page so the item disappears immediately
+    revalidatePath("/products");
+  } catch (error) {
+    console.error("Action deletion error:", error);
+    throw new Error("Failed to delete the product.");
+  }
+
+  // Redirect the user back to the inventory list
+  redirect("/products");
 }

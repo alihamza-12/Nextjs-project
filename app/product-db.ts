@@ -51,7 +51,7 @@ export async function createProduct(title: string, price: number, description?: 
 }
 
 //update product
-// Update an existing product in the DB
+
 export async function updateProduct(id: number, title: string, price: number, description?: string) {
   try {
     const updatedProduct = await prisma.product.update({
@@ -67,6 +67,22 @@ export async function updateProduct(id: number, title: string, price: number, de
     return updatedProduct;
   } catch (error) {
     console.error(`Error updating product with id ${id}:`, error);
+    throw error;
+  }
+}
+
+
+// Delete a product from the DB by its ID
+export async function deleteProduct(id: number) {
+  try {
+    const deletedProduct = await prisma.product.delete({
+      where: { id },
+    });
+
+    console.log("Successfully deleted product ❌", deletedProduct);
+    return deletedProduct;
+  } catch (error) {
+    console.error(`Error deleting product with id ${id}:`, error);
     throw error;
   }
 }
