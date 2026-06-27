@@ -49,3 +49,24 @@ export async function createProduct(title: string, price: number, description?: 
     throw error;
   }
 }
+
+//update product
+// Update an existing product in the DB
+export async function updateProduct(id: number, title: string, price: number, description?: string) {
+  try {
+    const updatedProduct = await prisma.product.update({
+      where: { id },
+      data: {
+        title,
+        price,
+        description,
+      },
+    });
+
+    console.log("Successfully updated product ✅", updatedProduct);
+    return updatedProduct;
+  } catch (error) {
+    console.error(`Error updating product with id ${id}:`, error);
+    throw error;
+  }
+}

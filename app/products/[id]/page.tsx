@@ -46,6 +46,18 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
           <p>{product.description || "No description provided for this item."}</p>
         </div>
       </div>
+     
+      <div className="flex justify-between items-start">
+        <span className="text-xs font-bold uppercase tracking-wider text-gray-400">
+          Product ID: #{product.id}
+        </span>
+        <Link 
+          href={`/products/${product.id}/edit`} 
+          className="bg-amber-500 hover:bg-amber-600 text-white text-sm px-3 py-1 rounded"
+        >
+          Edit Product
+        </Link>
+      </div>
     </main>
   );
 }
